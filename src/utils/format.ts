@@ -1,0 +1,1 @@
+export const fmtN = (n: number): string => "₦" + n.toLocaleString();

@@ -1,0 +1,37 @@
+.onboarding {
+  background: linear-gradient(170deg, var(--navy) 0%, #123C6E 60%, #0E9F8A 160%);
+  color: #fff;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 34px 26px;
+}
+.art {
+  flex: 1;
+  display: grid;
+  place-items: center;
+}
+.iconWrap {
+  width: 130px;
+  height: 130px;
+  border-radius: 36px;
+  background: rgba(255, 255, 255, .12);
+  display: grid;
+  place-items: center;
+}
+.dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin: 18px 0;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, .35);
+}
+.dotOn {
+  background: #5EEAD4;
+  width: 22px;
+}

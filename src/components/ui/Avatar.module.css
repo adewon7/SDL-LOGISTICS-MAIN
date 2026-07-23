@@ -1,0 +1,28 @@
+.avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--blue);
+  color: white;
+  font-weight: 800;
+}
+
+.small {
+  width: 32px;
+  height: 32px;
+  font-size: 11px;
+}
+
+.medium {
+  width: 42px;
+  height: 42px;
+  font-size: 13px;
+}
+
+.large {
+  width: 64px;
+  height: 64px;
+  font-size: 20px;
+}

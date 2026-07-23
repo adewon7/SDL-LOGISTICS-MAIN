@@ -1,0 +1,138 @@
+.vehicleRow {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.vehicleCard {
+  min-width: 112px;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  padding: 12px;
+  text-align: left;
+}
+.vehicleCard.active {
+  border-color: var(--teal);
+  background: var(--teal-soft);
+}
+.vehicleCard b {
+  display: block;
+  font-size: 13px;
+  margin-top: 8px;
+}
+.vehicleCard span {
+  font-size: 11px;
+  color: var(--slate);
+}
+/* ── Vehicle picker row ── */
+.vehicleRow {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.vehicleCard {
+  min-width: 112px;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  padding: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.vehicleCard.active {
+  border-color: var(--teal);
+  background: var(--teal-soft);
+}
+
+.vehicleCard b {
+  display: block;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.vehicleCard span {
+  font-size: 11px;
+  color: var(--slate);
+}
+
+/* ── Fare estimate card ── */
+.fareCard {
+  background: var(--blue-soft);
+  border: 0;
+}
+
+.fareLabel {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.fareAmount {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* ── Saved address quick-buttons ── */
+.addressRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ── Review step: booking detail rows ── */
+.detailRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.detailKey {
+  font-weight: 700;
+  flex: 1;
+  min-width: 0;
+}
+
+.detailValue {
+  font-size: 13.5px;
+  text-align: right;
+  max-width: 60%;
+}
+
+.totalRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 10px;
+}
+
+.totalAmount {
+  font-size: 21px;
+  font-weight: 700;
+}
+
+/* ── Payment card ── */
+.paymentLabel {
+  font-size: 13.5px;
+}
+
+.paymentSub {
+  font-size: 12px;
+}
+
+/* ── Booking ID card ── */
+.bookingIdLabel {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* ── Booked screen CTA ── */
+.bookedCta {
+  text-align: center;
+  margin-top: -8px;
+  margin-bottom: 16px;
+}

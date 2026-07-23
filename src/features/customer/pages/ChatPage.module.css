@@ -1,0 +1,129 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bubble {
+  max-width: 78%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+.bubbleMe {
+  align-self: flex-end;
+  background: var(--navy);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.bubbleThem {
+  align-self: flex-start;
+  background: #EEF2F7;
+  border-bottom-left-radius: 4px;
+}
+.wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 20px;
+}
+.waveBar {
+  width: 3px;
+  background: currentColor;
+  border-radius: 2px;
+  opacity: .85;
+}
+/* ── Message list ── */
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Bubbles ── */
+.bubble {
+  max-width: 78%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.bubbleMe {
+  align-self: flex-end;
+  background: var(--navy);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.bubbleThem {
+  align-self: flex-start;
+  background: #EEF2F7;
+  border-bottom-left-radius: 4px;
+}
+
+/* ── Voice message waveform ── */
+.wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 20px;
+}
+
+.waveBar {
+  width: 3px;
+  background: currentColor;
+  border-radius: 2px;
+  opacity: 0.85;
+}
+
+.voiceDuration {
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+/* ── Input toolbar ── */
+.toolbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid var(--line);
+  padding: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 11px 16px;
+  font: inherit;
+  font-size: 14px;
+  background: #fff;
+  color: var(--ink);
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--teal);
+}
+
+.sendBtn {
+  background: var(--navy);
+  color: #fff;
+  border: 0;
+}
+
+/* ── Topbar text ── */
+.driverName {
+  font-size: 14px;
+}
+
+.driverSub {
+  font-size: 11.5px;
+}

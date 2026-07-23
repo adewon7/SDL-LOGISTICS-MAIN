@@ -1,0 +1,46 @@
+/* ── Photo upload button ── */
+.photoBtn {
+  width: 100%;
+  border-style: dashed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 14px;
+  border-radius: 12px;
+  border-width: 1.5px;
+  background: #fff;
+  color: var(--slate);
+  font: inherit;
+  font-size: 14px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.photoBtnAttached {
+  color: var(--teal);
+  background: var(--teal-soft);
+  border-color: var(--teal);
+}
+
+/* ── Cost estimate card ── */
+.costCard {
+  background: var(--blue-soft);
+  border: 0;
+}
+
+.costLabel {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.costAmount {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* ── Booked screen CTA ── */
+.bookedCta {
+  text-align: center;
+  margin-top: -8px;
+}

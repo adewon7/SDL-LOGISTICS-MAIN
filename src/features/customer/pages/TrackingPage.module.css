@@ -1,0 +1,152 @@
+/* ── Full-page wrapper ── */
+.page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+}
+
+/* ── Map fills the whole page ── */
+.mapContainer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* ── Top bar floats over the map ── */
+.topBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.97) 70%, transparent);
+}
+
+.title {
+  font-size: 23px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── ETA + distance badge ── */
+.etaBadge {
+  position: absolute;
+  top: 68px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--navy);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  box-shadow: 0 2px 12px rgba(11, 37, 69, 0.12);
+  white-space: nowrap;
+}
+
+.etaDivider {
+  color: var(--line);
+}
+
+/* ── Bottom panel ── */
+.bottomPanel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -4px 24px rgba(11, 37, 69, 0.15);
+  transition: transform 0.3s ease;
+}
+
+/* ── Pull handle ── */
+.handle {
+  width: 100%;
+  background: none;
+  border: 0;
+  padding: 10px 0 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.handleBar {
+  width: 36px;
+  height: 4px;
+  border-radius: 99px;
+  background: var(--line);
+}
+
+/* ── Panel content ── */
+.panelContent {
+  padding: 0 16px 24px;
+}
+
+/* ── Driver info card ── */
+.driverCard {
+  padding: 10px 14px;
+  background: var(--bg);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.driverInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.driverName {
+  font-size: 14.5px;
+}
+
+.driverSub {
+  font-size: 12.5px;
+}
+
+.driverRating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 3px;
+}
+
+.ratingValue {
+  font-size: 12.5px;
+}
+
+.ratingTrips {
+  font-size: 12px;
+}
+
+/* ── Timeline card ── */
+.timelineCard {
+  margin-bottom: 12px;
+}
+
+/* ── Action buttons ── */
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.actionBtn {
+  flex: 1;
+  min-width: 0;
+}
