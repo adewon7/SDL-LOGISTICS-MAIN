@@ -39,6 +39,7 @@ export function AddressSearch({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [focused, setFocused] = useState(false);
+  const [userCity, setUserCity] = useState<string>("");
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -49,6 +50,21 @@ export function AddressSearch({
       setQuery(defaultValue);
     }
   }, [defaultValue]);
+
+  // Cache the user's city once, when their location is detected —
+  // avoids an extra API call on every keystroke
+  useEffect(() => {
+    if (!userLocation) return;
+    fetch(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${userLocation.lng},${userLocation.lat}.json?types=place&language=en&access_token=${TOKEN}`
+    )
+      .then((r) => r.json())
+      .then((data) => {
+        const city = data.features?.[0]?.text ?? "";
+        setUserCity(city);
+      })
+      .catch(() => {});
+  }, [userLocation]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -76,13 +92,19 @@ export function AddressSearch({
     timer.current = setTimeout(async () => {
       setLoading(true);
       try {
-        // Use user's real location for proximity if available, else Abuja
         const proximity = userLocation
           ? `${userLocation.lng},${userLocation.lat}`
           : "7.4951,9.0579";
 
+        // Auto-append the user's city if they haven't typed it themselves —
+        // helps disambiguate places that share a name across Nigeria
+        const enhancedQuery =
+          userCity && !value.toLowerCase().includes(userCity.toLowerCase())
+            ? `${value} ${userCity}`
+            : value;
+
         const res = await fetch(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(value)}.json?country=NG&proximity=${proximity}&language=en&limit=8&types=address,poi,neighborhood,locality,place,district&fuzzyMatch=true&bbox=2.676932,4.240594,14.680073,13.892007&access_token=${TOKEN}`
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(enhancedQuery)}.json?country=NG&proximity=${proximity}&language=en&limit=6&types=address,poi,neighborhood,locality,place,district&fuzzyMatch=true&access_token=${TOKEN}`
         );
         const data = await res.json();
         const places: PlaceResult[] = (data.features ?? []).map((f: any) => ({
@@ -98,7 +120,7 @@ export function AddressSearch({
       } finally {
         setLoading(false);
       }
-    }, 200); // Faster — 200ms instead of 300ms
+    }, 200);
   };
 
   const pick = (place: PlaceResult) => {
