@@ -35,6 +35,7 @@ export function RideBookingPage({ back, onTrack, preset }: RideBookingPageProps)
   const [pickupCoords, setPickupCoords] = useState<LatLng | null>(null);
   const [destCoords, setDestCoords] = useState<LatLng | null>(null);
   const [routeKm, setRouteKm] = useState<number>(8.4);
+  const [userLocation, setUserLocation] = useState<LatLng | null>(null);
 
   const vehicle = VEHICLES.find((v) => v.id === vehicleId)!;
   const fare = Math.round((vehicle.base + vehicle.perKm * routeKm) / 50) * 50;
@@ -62,12 +63,17 @@ export function RideBookingPage({ back, onTrack, preset }: RideBookingPageProps)
         {/* ── Step 0: Location ── */}
         {step === 0 && (
           <>
-            <RideMap
-              pickup={pickupCoords}
-              destination={destCoords}
-              height={200}
-              onDistanceChange={(km: number) => setRouteKm(km)}
-            />
+           <RideMap
+  pickup={pickupCoords}
+  destination={destCoords}
+  height={200}
+  onDistanceChange={(km: number) => setRouteKm(km)}
+  onLocationDetected={(location, address) => {
+    setUserLocation(location);
+    setPickupCoords(location);
+    setFrom(address);
+  }}
+/>
             <div className="mt" />
             <Field label="Pickup">
               <AddressSearch
