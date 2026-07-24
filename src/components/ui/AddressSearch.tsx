@@ -82,7 +82,7 @@ export function AddressSearch({
           : "7.4951,9.0579";
 
         const res = await fetch(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(value)}.json?country=NG&proximity=${proximity}&language=en&limit=6&types=address,poi,neighborhood,locality,place&fuzzyMatch=true&access_token=${TOKEN}`
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(value)}.json?country=NG&proximity=${proximity}&language=en&limit=8&types=address,poi,neighborhood,locality,place,district&fuzzyMatch=true&bbox=2.676932,4.240594,14.680073,13.892007&access_token=${TOKEN}`
         );
         const data = await res.json();
         const places: PlaceResult[] = (data.features ?? []).map((f: any) => ({
