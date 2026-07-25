@@ -29,11 +29,12 @@ interface DeliveryBookingPageProps {
 export function DeliveryBookingPage({ back, onTrack, scheduled }: DeliveryBookingPageProps) {
   const { showToast } = useToast();
   const [step, setStep] = useState(0);
-  const [from, setFrom] = useState("14 Ganges Street, Maitama");
+  const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [pickupCoords, setPickupCoords] = useState<LatLng | null>(null);
   const [destCoords, setDestCoords] = useState<LatLng | null>(null);
   const [routeKm, setRouteKm] = useState<number>(0);
+  const [userLocation, setUserLocation] = useState<LatLng | null>(null);
   const [packageType, setPackageType] = useState("Documents");
   const [size, setSize] = useState(SIZE_OPTIONS[0]);
   const [urgency, setUrgency] = useState<Urgency>(scheduled ? "Scheduled" : "Express");
@@ -71,12 +72,18 @@ export function DeliveryBookingPage({ back, onTrack, scheduled }: DeliveryBookin
               destination={destCoords}
               height={200}
               onDistanceChange={(km: number) => setRouteKm(km)}
+              onLocationDetected={(location, address) => {
+                setUserLocation(location);
+                setPickupCoords(location);
+                setFrom(address);
+              }}
             />
             <div className="mt" />
             <Field label="Pickup">
               <AddressSearch
                 placeholder="Enter pickup location"
                 defaultValue={from}
+                userLocation={userLocation}
                 onSelect={(place: PlaceResult) => {
                   setFrom(place.label);
                   setPickupCoords({ lat: place.lat, lng: place.lng });
@@ -86,6 +93,7 @@ export function DeliveryBookingPage({ back, onTrack, scheduled }: DeliveryBookin
             <Field label="Drop-off">
               <AddressSearch
                 placeholder="Recipient's address"
+                userLocation={userLocation}
                 onSelect={(place: PlaceResult) => {
                   setTo(place.label);
                   setDestCoords({ lat: place.lat, lng: place.lng });

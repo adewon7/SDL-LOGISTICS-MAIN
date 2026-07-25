@@ -25,12 +25,12 @@ interface RideBookingPageProps {
 export function RideBookingPage({ back, onTrack, preset }: RideBookingPageProps) {
   const { showToast } = useToast();
   const [step, setStep] = useState(0);
-  const [from, setFrom] = useState("14 Ganges Street, Maitama");
+  const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [vehicleId, setVehicleId] = useState<VehicleType>(preset ?? "car");
   const [passengers, setPassengers] = useState(1);
   const [when, setWhen] = useState<"now" | "later">("now");
-  const [note, setNote] = useState("");
+  const [note, setNote] = useState(""); 
   const [busy, setBusy] = useState(false);
   const [pickupCoords, setPickupCoords] = useState<LatLng | null>(null);
   const [destCoords, setDestCoords] = useState<LatLng | null>(null);
@@ -63,22 +63,23 @@ export function RideBookingPage({ back, onTrack, preset }: RideBookingPageProps)
         {/* ── Step 0: Location ── */}
         {step === 0 && (
           <>
-           <RideMap
-  pickup={pickupCoords}
-  destination={destCoords}
-  height={200}
-  onDistanceChange={(km: number) => setRouteKm(km)}
-  onLocationDetected={(location, address) => {
-    setUserLocation(location);
-    setPickupCoords(location);
-    setFrom(address);
-  }}
-/>
+            <RideMap
+              pickup={pickupCoords}
+              destination={destCoords}
+              height={200}
+              onDistanceChange={(km: number) => setRouteKm(km)}
+              onLocationDetected={(location, address) => {
+                setUserLocation(location);
+                setPickupCoords(location);
+                setFrom(address);
+              }}
+            />
             <div className="mt" />
             <Field label="Pickup">
               <AddressSearch
                 placeholder="Enter pickup location"
                 defaultValue={from}
+                userLocation={userLocation}
                 onSelect={(place: PlaceResult) => {
                   setFrom(place.label);
                   setPickupCoords({ lat: place.lat, lng: place.lng });
@@ -88,6 +89,7 @@ export function RideBookingPage({ back, onTrack, preset }: RideBookingPageProps)
             <Field label="Destination">
               <AddressSearch
                 placeholder="Where are you headed?"
+                userLocation={userLocation}
                 onSelect={(place: PlaceResult) => {
                   setTo(place.label);
                   setDestCoords({ lat: place.lat, lng: place.lng });
