@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronLeft, ArrowRight, MapPin, Calendar, Zap, CreditCard, CheckCircle2 } from "lucide-react";
+import { ChevronLeft, ArrowRight, MapPin, Calendar, Zap, CreditCard, Banknote, CheckCircle2 } from "lucide-react";
 import { Field } from "../../../components/ui/Field";
 import { Button } from "../../../components/ui/Button";
 import { Card } from "../../../components/ui/Card";
@@ -16,6 +16,8 @@ import styles from "./RideBookingPage.module.css";
 
 const PASSENGER_OPTIONS = [1, 2, 3, 4, 6, 14];
 
+type PaymentMethod = "card" | "cash";
+
 interface RideBookingPageProps {
   back: () => void;
   onTrack: () => void;
@@ -30,12 +32,14 @@ export function RideBookingPage({ back, onTrack, preset }: RideBookingPageProps)
   const [vehicleId, setVehicleId] = useState<VehicleType>(preset ?? "car");
   const [passengers, setPassengers] = useState(1);
   const [when, setWhen] = useState<"now" | "later">("now");
-  const [note, setNote] = useState(""); 
+  const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
   const [pickupCoords, setPickupCoords] = useState<LatLng | null>(null);
   const [destCoords, setDestCoords] = useState<LatLng | null>(null);
   const [routeKm, setRouteKm] = useState<number>(8.4);
   const [userLocation, setUserLocation] = useState<LatLng | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
 
   const vehicle = VEHICLES.find((v) => v.id === vehicleId)!;
   const fare = Math.round((vehicle.base + vehicle.perKm * routeKm) / 50) * 50;
@@ -46,7 +50,11 @@ export function RideBookingPage({ back, onTrack, preset }: RideBookingPageProps)
     setTimeout(() => {
       setBusy(false);
       setStep(3);
-      showToast("Booking confirmed — finding your driver");
+      showToast(
+        paymentMethod === "cash"
+          ? "Booking confirmed — pay your driver in cash"
+          : "Booking confirmed — finding your driver"
+      );
     }, 1300);
   };
 
@@ -216,16 +224,30 @@ export function RideBookingPage({ back, onTrack, preset }: RideBookingPageProps)
             </Card>
 
             <Card className="row mb">
-              <CreditCard size={18} color="var(--blue)" />
+              {paymentMethod === "card" ? (
+                <CreditCard size={18} color="var(--blue)" />
+              ) : (
+                <Banknote size={18} color="var(--teal)" />
+              )}
               <div className="grow">
-                <b className={styles.paymentLabel}>Verve •••• 4821</b>
-                <div className={`muted ${styles.paymentSub}`}>Default payment method</div>
+                <b className={styles.paymentLabel}>
+                  {paymentMethod === "card" ? "Verve •••• 4821" : "Cash"}
+                </b>
+                <div className={`muted ${styles.paymentSub}`}>
+                  {paymentMethod === "card" ? "Default payment method" : "Pay the driver directly"}
+                </div>
               </div>
-              <Button variant="secondary" size="sm">Change</Button>
+              <Button variant="secondary" size="sm" onClick={() => setPaymentModalOpen(true)}>
+                Change
+              </Button>
             </Card>
 
             <Button variant="teal" fullWidth onClick={confirm} disabled={busy}>
-              {busy ? "Confirming…" : `Confirm · ${fmtN(fare)}`}
+              {busy
+                ? "Confirming…"
+                : paymentMethod === "cash"
+                ? `Confirm · Pay ${fmtN(fare)} cash`
+                : `Confirm · ${fmtN(fare)}`}
             </Button>
           </>
         )}
@@ -250,6 +272,53 @@ export function RideBookingPage({ back, onTrack, preset }: RideBookingPageProps)
           </>
         )}
       </div>
+
+      {/* ── Payment method sheet ── */}
+      {paymentModalOpen && (
+        <div className="ovl" onClick={() => setPaymentModalOpen(false)}>
+          <div className="sheet" onClick={(e) => e.stopPropagation()}>
+            <div className="h3 mb">Choose payment method</div>
+
+            <button
+              className="card row mb"
+              style={{
+                width: "100%",
+                border: paymentMethod === "card" ? "1.5px solid var(--blue)" : "1px solid var(--line)",
+              }}
+              onClick={() => {
+                setPaymentMethod("card");
+                setPaymentModalOpen(false);
+              }}
+            >
+              <CreditCard size={18} color="var(--blue)" />
+              <div className="grow" style={{ textAlign: "left" }}>
+                <b style={{ fontSize: 13.5 }}>Verve •••• 4821</b>
+                <div className="muted" style={{ fontSize: 12 }}>Pay now with card</div>
+              </div>
+              {paymentMethod === "card" && <CheckCircle2 size={18} color="var(--blue)" />}
+            </button>
+
+            <button
+              className="card row"
+              style={{
+                width: "100%",
+                border: paymentMethod === "cash" ? "1.5px solid var(--teal)" : "1px solid var(--line)",
+              }}
+              onClick={() => {
+                setPaymentMethod("cash");
+                setPaymentModalOpen(false);
+              }}
+            >
+              <Banknote size={18} color="var(--teal)" />
+              <div className="grow" style={{ textAlign: "left" }}>
+                <b style={{ fontSize: 13.5 }}>Cash</b>
+                <div className="muted" style={{ fontSize: 12 }}>Pay the driver directly</div>
+              </div>
+              {paymentMethod === "cash" && <CheckCircle2 size={18} color="var(--teal)" />}
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
